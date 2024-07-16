@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package cn.iocoder.springboot.lab64.userservice.api;
+
+option java_package = "cn.iocoder.springboot.lab64.userservice.rpc";
+option java_outer_classname = "UserServiceProto";
+option go_package = "cn.iocoder.springboot.lab64.userservice.api";
+
+service UserService {
+    rpc Get (UserGetRequest) returns (UserGetResponse);
+    rpc Create (UserCreateRequest) returns (UserCreateResponse);
+}
+
+message UserGetRequest {
+    int32 id = 1;
+}
+
+message UserGetResponse {
+    int32 id = 1;
+    string name = 2;
+    int32 gender = 3;
+}
+
+message UserCreateRequest {
+    string name = 1;
+    int32 gender = 2;
+}
+
+message UserCreateResponse {
+    int32 id = 1;
+}
