@@ -35,3 +35,7 @@ spring:
         password: ''
         port: 8379
         timeout: 10s
+ko-time:
+    #需要监测的范围，是链路包含的范围，不仅仅是接口层，参考aop的@pointcut
+    pointcut: execution(public * com.wangn.java..*.*(..))
+
