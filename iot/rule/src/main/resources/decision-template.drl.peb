@@ -1,0 +1,12 @@
+package com.iot.rules;
+
+import com.iot.rule.entity.Device;
+import com.iot.rule.decision.Decision;
+
+rule "Device {{deviceId}} {{ruleCondition}} {{ruleValue}}"
+when
+    device: Device(deviceId == "{{deviceId}}")
+    eval(device.getTemperature() {{ruleCondition}} Double.parseDouble("{{ruleValue}}"))
+then
+    device.setAction("Alert: Device " + device.getDeviceId() + " temperature " + device.getTemperature() + " is " + "{{ruleCondition}}" + " " + "{{ruleValue}}");
+end
