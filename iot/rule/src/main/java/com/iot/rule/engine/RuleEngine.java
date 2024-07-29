@@ -19,6 +19,7 @@ public class RuleEngine {
         session.dispose();
     }
 
+
     public KieSession createKieSessionFromDRL(String drlFullPath) throws Exception{
         //设置规则所使用的日期格式
         System.setProperty("drools.dateformat", "yyyy-MM-dd");
