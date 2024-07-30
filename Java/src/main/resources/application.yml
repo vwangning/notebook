@@ -38,8 +38,13 @@ spring:
     trace:
         log:
             format: X-B3-TraceId,X-B3-ParentName
-
+    neo4j:
+        uri: bolt://localhost:7687
+        authentication:
+            username: neo4j
+            password: 123456
 ko-time:
     #需要监测的范围，是链路包含的范围，不仅仅是接口层，参考aop的@pointcut
     pointcut: execution(public * com.wangn.java..*.*(..))
+
 

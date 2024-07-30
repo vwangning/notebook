@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:4.4.11
+    container_name: neo4j
+    environment:
+      NEO4J_AUTH: neo4j/123456 # 设置Neo4j的用户名和密码
+      NEO4J_dbms_memory_pagecache_size: 512M  # 可选：设置内存配置
+      NEO4J_dbms_memory_heap_initial__size: 1G
+      NEO4J_dbms_memory_heap_max__size: 2G
+    ports:
+      - "7474:7474"  # 浏览器UI
+      - "7687:7687"  # Bolt协议
+    volumes:
+      - ./neo4j_data:/data
+      - ./neo4j_logs:/logs
+      - ./neo4j_import:/var/lib/neo4j/import
+      - ./neo4j_plugins:/plugins
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
