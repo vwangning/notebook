@@ -1,0 +1,39 @@
+@startuml
+!theme mars
+left to right direction
+scale 200 height
+
+title 业务调用链路图
+
+skinparam componentStyle rectangle
+skinparam linetype ortho
+
+rectangle "XxlJob\n调度任务" as xxlJob
+rectangle "聚投平台\n请求发起方" as juTou
+rectangle "Gateway\n请求路由" as gateway
+rectangle "ChannelService\n业务处理&消息发送" as channel
+rectangle "HttpClient\n外部服务调用" as httpclient
+rectangle "MqProducer\n消息生产者" as producer
+rectangle "MQ\n消息队列" as mq
+rectangle "Consumer\n消息消费者" as consumer
+
+xxlJob --> channel : <b>调度 / 触发
+juTou --> gateway : <b>请求
+gateway --> channel : <b>路由请求
+channel --> httpclient : <b>调用外部服务
+channel --> producer : <b>生产消息
+producer --> mq : <b>发送
+mq --> consumer : <b>分发
+consumer --> httpclient : <b>调用外部服务
+
+note bottom of channel
+处理来自 XxlJob 和网关的请求，
+包含对外服务调用与 MQ 消息发送
+end note
+
+note bottom of consumer
+消费 MQ 消息，
+并可能触发外部服务调用
+end note
+
+@enduml

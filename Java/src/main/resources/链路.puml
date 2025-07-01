@@ -1,0 +1,36 @@
+@startuml
+!theme mars
+scale 800 width
+left to right direction
+
+title 业务链路追踪系统架构
+
+skinparam componentStyle rectangle
+skinparam linetype ortho
+
+rectangle "XXL-Job\n任务调度" as xxljob
+rectangle "RocketMQ\n消息队列" as rocketmq
+rectangle "HTTP API\n接口调用" as httpapi
+
+xxljob --> rocketmq : 触发/发送
+rocketmq --> httpapi : 消费/调用
+
+rectangle "链路追踪核心组件" {
+  component "TraceContext" as traceContext
+  component "SpanManager" as spanManager
+  component "TraceLogger" as traceLogger
+
+  xxljob ..> traceContext : 上报
+  rocketmq ..> traceContext : 上报
+  httpapi ..> traceContext : 上报
+
+  traceContext --> spanManager
+  spanManager --> traceLogger
+}
+
+rectangle "数据存储层" {
+  component "Elasticsearch\n(日志存储)" as elasticsearch
+  traceLogger --> elasticsearch : 写入日志
+}
+
+@enduml
